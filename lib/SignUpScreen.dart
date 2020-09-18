@@ -17,7 +17,7 @@ class _SignUpScreen extends State<SignUpScreen>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.blue,
       //we changed the column to listview
       body: ListView(
         children: <Widget>[
