@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "399904351611",
+    "firebase_url": "https://click-to-eat-e57cc.firebaseio.com",
+    "project_id": "click-to-eat-e57cc",
+    "storage_bucket": "click-to-eat-e57cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399904351611:android:36c31354adb9f9ec8689de",
+        "android_client_info": {
+          "package_name": "com.example.upgradeecomm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399904351611-mtrb9q0gglslba7gm2khkncbk0h36v4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHGwHKAzpX668-qp4tjHHS_MFi-XfIon4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399904351611-mtrb9q0gglslba7gm2khkncbk0h36v4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
