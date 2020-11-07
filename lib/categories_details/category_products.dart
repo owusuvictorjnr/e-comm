@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flat_icons_flutter/flat_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:upgradeecomm/address/address_main.dart';
 import 'package:upgradeecomm/config/colors.dart';
 import 'package:upgradeecomm/constant/circle_buttons.dart';
@@ -42,14 +44,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   final dBase = FirebaseFirestore.instance.collection("orders");
 
 
-  bool isFavorite = false;
-
-
   // ===> FUNCTION FOR ADDING TO CART <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE CART*/
   Future  addToCart(index ,data) {
-    String title= data.documents[index]
+    String title = data.documents[index]
         .get('Product Title');
     String price = data.documents[index]
         .get('Product Price');
@@ -67,49 +66,62 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   // ===> FUNCTION FOR ADDING TO FAVORITE <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE FAVORITE */
-  Future addToFavorite(title, price, thumbnailUrl) {
-    return db.doc(user.uid).collection("Favorite").doc(productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future addToFavorite(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Favorite")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Favorite").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
 
   // ===> FUNCTION FOR ADDING TO ORDER TO A USER <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE ORDERS */
-  Future addToUserOrder(title, price, thumbnailUrl) {
-    return db.doc(user.uid).collection("Order").doc(productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future addToUserOrder(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Order")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Order").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
 
   // ===> FUNCTION FOR ADDING TO ORDER TO ADMIN <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE ORDERS */
-  Future addToAdminOrder(title, price, thumbnailUrl) {
-    return dBase.doc(productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
-  }
+  Future addToAdminOrder(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("order")}");
+    print("${data.documents[index].data()}");
 
-  checkExistence(DocumentSnapshot snapshot){
-    if(!snapshot.exists){
-      Future addToAdminOrder(title, price, thumbnailUrl){
-        return dBase.doc(productId).set({
-          "Product Title": title,
-          "Product Price": price,
-          "thumbnail": thumbnailUrl,
-        });
-      }
-    }
-    else{
-      print("Added to Orders already");
-    }
+    return FirebaseFirestore.instance.collection("orders").doc(data.documents[index].reference.documentID.toString()).set(
+      data.documents[index].data()
+    );
+
+    // return db.doc(user.uid).collection("order").doc(data.documents[index].reference.documentID.toString()).set(
+    //     data.documents[index].data()
+    // );
   }
 
   // ===> THIS FUNCTION IS SPIN KIT FOR THE SPIN <===
@@ -435,7 +447,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                                       },
                                                     ),
                                                     SizedBox(
-                                                      width: 3,
+                                                      width: 1,
                                                     ),
 
                                                     // ===> FAVORITING ICON STARTS FROM HERE <===
@@ -445,40 +457,48 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                                           size: 35,
                                                           color: Palette.blackColor,
                                                         ),
-                                                        onPressed: () {
-                                                          addToFavorite(
-                                                            snapshot.data.documents[index]
-                                                                .get('Product Title'),
-                                                            snapshot.data.documents[index]
-                                                                .get('Product Price'),
-                                                            snapshot.data.documents[index]
-                                                                .get('thumbnail'),
+                                                        onPressed: () async {
+                                                          await addToFavorite(
+                                                              index,
+                                                              snapshot.data
                                                           );
                                                           print("Favorite");
                                                         }
                                                     ),
                                                     SizedBox(
-                                                      width: 3,
+                                                      width: 1,
                                                     ),
 
+                                                    // ===> ORDER ICON STARTS FROM HERE <===
+                                                    // IconButton(
+                                                    //     icon: Icon(LineAwesomeIcons.first_order,
+                                                    //     size: 35,),
+                                                    //     onPressed: () async {
+                                                    //       await addToUserOrder(
+                                                    //           index,
+                                                    //           snapshot.data
+                                                    //       );
+                                                    //
+                                                    //       await addToAdminOrder(
+                                                    //           index,
+                                                    //           snapshot.data
+                                                    //       );
+                                                    //       print("orders");
+                                                    //     }
+                                                    // ),
+
+
+                                                    // ===> ORDER ICON STARTS FROM HERE <===
                                                     GestureDetector(
                                                       onTap: () {
                                                         addToUserOrder(
-                                                          snapshot.data.documents[index]
-                                                              .get('Product Title'),
-                                                          snapshot.data.documents[index]
-                                                              .get('Product Price'),
-                                                          snapshot.data.documents[index]
-                                                              .get('thumbnail'),
+                                                            index,
+                                                            snapshot.data
                                                         );
 
                                                         addToAdminOrder(
-                                                          snapshot.data.documents[index]
-                                                              .get('Product Title'),
-                                                          snapshot.data.documents[index]
-                                                              .get('Product Price'),
-                                                          snapshot.data.documents[index]
-                                                              .get('thumbnail'),
+                                                            index,
+                                                            snapshot.data
                                                         );
                                                         print('Orders');
 
@@ -493,7 +513,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                                     ),
 
                                                     SizedBox(
-                                                      width: 3,
+                                                      width: 1,
                                                     ),
                                                     // ===> CANCEL ICON STARTS FROM HERE <===
                                                     IconButton(

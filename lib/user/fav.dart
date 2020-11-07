@@ -3,6 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:upgradeecomm/address/address_main.dart';
 import 'package:upgradeecomm/config/colors.dart';
 import 'package:upgradeecomm/constant/circle_buttons.dart';
 import 'package:upgradeecomm/constant/drawer.dart';
@@ -35,12 +36,77 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   // ===> FUNCTION FOR ADDING TO CART <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE CART*/
-  Future addToCart(title, price, thumbnailUrl) {
-    return db.doc(user.uid).collection("Cart").doc(widget.productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future  addToCart(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Cart")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Cart").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
+  }
+
+  // ===> FUNCTION FOR ADDING TO FAVORITE <===
+
+  /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE FAVORITE */
+  Future addToFavorite(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Favorite")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Favorite").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
+  }
+
+  // ===> FUNCTION FOR ADDING TO ORDER TO A USER <===
+
+  /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE ORDERS */
+  Future addToUserOrder(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Order")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Order").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
+  }
+
+  // ===> FUNCTION FOR ADDING TO ORDER TO ADMIN <===
+
+  /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE ORDERS */
+  Future addToAdminOrder(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("order")}");
+    print("${data.documents[index].data()}");
+
+    return FirebaseFirestore.instance.collection("orders").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
 
   // ignore: slash_for_doc_comments
@@ -264,53 +330,113 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        await addToCart(
-                                          snapshot.data.documents[index]
-                                              .get('Product Title'),
-                                          snapshot.data.documents[index]
-                                              .get('Product Price'),
-                                          snapshot.data.documents[index]
-                                              .get('thumbnail'),
-                                        );
-                                        Scaffold.of(context).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor: Palette.pinkAccent,
-                                            duration: Duration(seconds: 2),
-                                            content: Row(
-                                              children: [
-                                                Icon(Icons.thumb_up, color: Palette.whiteColor,),
-                                                SizedBox(width: 8,),
-                                                Text("Item added to Cart successfully",
-                                                style: TextStyle(
-                                                  color: Palette.whiteColor
-                                                ),),
-                                              ],
-                                            ),),
-                                        );
-                                        print("Favorite");
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Palette.pinkAccent,
-                                          borderRadius: BorderRadius.only(topRight:  Radius.circular(15),
-                                              bottomLeft:  Radius.circular(15)),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 8, bottom: 8, left: 8, right: 5),
-                                          child: Row(
-                                            children: [
-                                              Text("ADD TO CART", style: TextStyle(
-                                                color: Palette.whiteColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),),
-                                            ],
+                                    // ===> Buy-me Button, Bags and Favorite icon starts here <===
+                                    Container(
+                                      color: Palette.whiteColor,
+                                      child: Row(
+                                        children: [
+                                          Wrap(direction: Axis.vertical, children: [
+                                            GestureDetector(
+                                              onTap: (){
+                                                // ===> SEND USER TO MAIN ADDRESS SCREEN <===
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => AddressMainScreen()),
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 77,
+                                                decoration: BoxDecoration(
+                                                  color: Palette.pinkAccent,
+                                                  borderRadius: BorderRadius.only(topRight:  Radius.circular(15),
+                                                      bottomLeft:  Radius.circular(15)),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 8, bottom: 8, left: 5, right: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Center(
+                                                        child: Text("BUY NOW", style: TextStyle(
+                                                          color: Palette.whiteColor,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ]),
+                                          SizedBox(
+                                            width: 0,
                                           ),
-                                        ),
+
+                                          // ===> SHOPPING BAG ICON STARTS FROM HERE <===
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.shopping_cart,
+                                              color: Palette.blackColor,
+                                              size: 35,
+                                            ),
+                                            onPressed: () async {
+                                              await addToCart(
+                                                  index,
+                                                  snapshot.data
+                                              );
+                                              print("Cart");
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 0,
+                                          ),
+
+                                          // ===> FAVORITING ICON STARTS FROM HERE <===
+                                          IconButton(
+                                              icon: Icon(
+                                                Icons.favorite,
+                                                size: 35,
+                                                color: Palette.blackColor,
+                                              ),
+                                              onPressed: () {
+                                                addToFavorite(
+                                                    index,
+                                                    snapshot.data
+                                                );
+                                                print("Favorite");
+                                              }
+                                          ),
+                                          SizedBox(
+                                            width: 0,
+                                          ),
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              addToUserOrder(
+                                                  index,
+                                                  snapshot.data
+                                              );
+
+                                              addToAdminOrder(
+                                                  index,
+                                                  snapshot.data
+                                              );
+                                              print('Orders');
+
+                                            },
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              // color: Colors.white,
+                                              child: Image.asset("images/order_now.jpg",
+                                                fit: BoxFit.cover,),
+                                            ),
+                                          ),
+
+                                        ],
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),

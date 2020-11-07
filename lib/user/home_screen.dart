@@ -57,46 +57,79 @@ class _HomeScreenState extends State<HomeScreen> {
   // ===> FUNCTION FOR ADDING TO CART <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE CART*/
-  Future addToCart(title, price, thumbnailUrl) {
-    return db.doc(user.uid).collection("Cart").doc(widget.productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future  addToCart(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Cart")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Cart").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
 
   // ===> FUNCTION FOR ADDING TO FAVORITE <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE FAVORITE */
-  Future addToFavorite(title, price, thumbnailUrl) {
-    return db.doc(user.uid).collection("Favorite").doc(widget.productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future addToFavorite(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Favorite")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Favorite").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
 
   // ===> FUNCTION FOR ADDING TO ORDER TO A USER <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE ORDERS */
-  Future addToUserOrder(title, price, thumbnailUrl) {
-    return db.doc(user.uid).collection("Order").doc(widget.productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future addToUserOrder(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Order")}");
+    print("${data.documents[index].data()}");
+
+    return db.doc(user.uid).collection("Order").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
 
   // ===> FUNCTION FOR ADDING TO ORDER TO ADMIN <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE ORDERS */
-  Future addToAdminOrder(title, price, thumbnailUrl) {
-    return dBase.doc(widget.productId).set({
-      "Product Title": title,
-      "Product Price": price,
-      "thumbnail": thumbnailUrl,
-    });
+  Future addToAdminOrder(index ,data) {
+    String title = data.documents[index]
+        .get('Product Title');
+    String price = data.documents[index]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[index]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("order")}");
+    print("${data.documents[index].data()}");
+
+    return FirebaseFirestore.instance.collection("orders").doc(data.documents[index].reference.documentID.toString()).set(
+        data.documents[index].data()
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -523,12 +556,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     onPressed: () async {
                                                       await addToCart(
-                                                        snapshot.data.documents[index]
-                                                            .get('Product Title'),
-                                                        snapshot.data.documents[index]
-                                                            .get('Product Price'),
-                                                        snapshot.data.documents[index]
-                                                            .get('thumbnail'),
+                                                          index,
+                                                          snapshot.data
                                                       );
                                                       print("Cart");
                                                     },
@@ -546,12 +575,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                       onPressed: () {
                                                         addToFavorite(
-                                                          snapshot.data.documents[index]
-                                                              .get('Product Title'),
-                                                          snapshot.data.documents[index]
-                                                              .get('Product Price'),
-                                                          snapshot.data.documents[index]
-                                                              .get('thumbnail'),
+                                                            index,
+                                                            snapshot.data
                                                         );
                                                         print("Favorite");
                                                       }
@@ -563,21 +588,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   GestureDetector(
                                                     onTap: () {
                                                       addToUserOrder(
-                                                        snapshot.data.documents[index]
-                                                            .get('Product Title'),
-                                                        snapshot.data.documents[index]
-                                                            .get('Product Price'),
-                                                        snapshot.data.documents[index]
-                                                            .get('thumbnail'),
+                                                          index,
+                                                          snapshot.data
                                                       );
 
                                                       addToAdminOrder(
-                                                        snapshot.data.documents[index]
-                                                            .get('Product Title'),
-                                                        snapshot.data.documents[index]
-                                                            .get('Product Price'),
-                                                        snapshot.data.documents[index]
-                                                            .get('thumbnail'),
+                                                          index,
+                                                          snapshot.data
                                                       );
                                                       print('Orders');
 

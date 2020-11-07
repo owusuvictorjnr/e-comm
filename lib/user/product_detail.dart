@@ -37,12 +37,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   // ===> FUNCTION FOR ADDING TO ORDER TO USER <===
 
   /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE CART */
-  Future addToCart(){
-    return db.doc(user.uid).collection("Cart").doc(widget.productId).set({
-      "Product Title": 1,
-      // "Product Price": price,
-      // "thumbnail": thumbnailUrl,
-    });
+  // ===> FUNCTION FOR ADDING TO CART <===
+
+  /* I CREATED A SUB-COLLECTION WITHIN THE USERS COLLECTION TO STORE CART*/
+  Future  addToCart(data) {
+    String title = data.documents[data]
+        .get('Product Title');
+    String price = data.documents[data]
+        .get('Product Price');
+    String thumbnailUrl = data.documents[data]
+        .get('thumbnail');
+    print("$data");
+    print("${db.doc(user.uid).collection("Cart")}");
+    print("${data.documents[data].data()}");
+
+    return db.doc(user.uid).collection("Cart").doc(data.documents[data].reference.documentID.toString()).set(
+        data.documents[data].data()
+    );
   }
 
   final SnackBar snackbar = SnackBar(content: Text("Added to Cart successfully"));
@@ -280,25 +291,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
 
                                   onPressed: (){
-                                    addToCart();
-
+                                    addToCart(
+                                        snapshot.data
+                                    );
                                     Scaffold.of(context).showSnackBar(snackbar);
                                   },
-
-                                  // onPressed: () async {
-                                  //
-                                  //   addToCart(){};
-                                  //
-                                  //   // await addToCart(
-                                  //   //   snapshot.data.documents[index]
-                                  //   //       .get('Product Title'),
-                                  //   //   snapshot.data.documents[index]
-                                  //   //       .get('Product Price'),
-                                  //   //   snapshot.data.documents[index]
-                                  //   //       .get('thumbnail'),
-                                  //   // );
-                                  //   print("Cart");
-                                  // },
                                 ),
                                 SizedBox(
                                   width: 7,
@@ -312,150 +309,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       size: 35,
                                     ),
                                     onPressed: () {
-                                      // addToFavorite(
-                                      //   snapshot.data.documents[index]
-                                      //       .get('Product Title'),
-                                      //   snapshot.data.documents[index]
-                                      //       .get('Product Price'),
-                                      //   snapshot.data.documents[index]
-                                      //       .get('thumbnail'),
-                                      // );
                                       print("Favorite");
                                     }
                                 ),
                                 SizedBox(
                                   width: 7,
                                 ),
-
-                                // ===> ORDER ICON STARTS FROM HERE <===
-                                // IconButton(
-                                //   icon: Icon(
-                                //     LineAwesomeIcons.first_order,
-                                //     color: Palette.blackColor,
-                                //     size: 35,
-                                //   ),
-                                //   onPressed: () {
-                                //     // ===> SEND USER TO ORDER SCREEN <===
-                                //     addToOrder(
-                                //       snapshot.data.documents[index]
-                                //           .get('Product Title'),
-                                //       snapshot.data.documents[index]
-                                //           .get('Product Price'),
-                                //       snapshot.data.documents[index]
-                                //           .get('thumbnail'),
-                                //     );
-                                //     print('Orders');
-                                //
-                                //   },
-                                // ),
-
-                                // ===> ORDER IMAGE STARTS FROM HERE <===
                                 GestureDetector(
                                   onTap: (){
-                                    // ===> RETRIEVE THESE DETAILS FROM ORDERS COLLECTION <===
-                                    // addToUserOrder(
-                                    //   snapshot.data.documents[index]
-                                    //       .get('Product Title'),
-                                    //   snapshot.data.documents[index]
-                                    //       .get('Product Price'),
-                                    //   snapshot.data.documents[index]
-                                    //       .get('thumbnail'),
-                                    // );
-                                    //
-                                    // addToAdminOrder(
-                                    //   snapshot.data.documents[index]
-                                    //       .get('Product Title'),
-                                    //   snapshot.data.documents[index]
-                                    //       .get('Product Price'),
-                                    //   snapshot.data.documents[index]
-                                    //       .get('thumbnail'),
-                                    // );
-
-                                    /*
-                                             *
-                                             *  // return showDialog(
-                                              //   context: context,
-                                              //   builder: (context){
-                                              //     return Center(
-                                              //       child: Material(
-                                              //         child: Padding(
-                                              //           padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-                                              //           child: Container(
-                                              //             decoration: BoxDecoration(
-                                              //                 borderRadius: BorderRadius.circular(10)
-                                              //             ),
-                                              //             height: 160,
-                                              //             width: 250,
-                                              //             child: Column(
-                                              //               children: [
-                                              //                 Container(
-                                              //                   decoration: BoxDecoration(
-                                              //                     borderRadius: BorderRadius.circular(10)
-                                              //                   ),
-                                              //                   child: Form(
-                                              //                     key: _mobiileKey,
-                                              //                     autovalidate: _autoValidate,
-                                              //                     child: TextFormField(
-                                              //                       maxLines: 1,
-                                              //                       autofocus: false,
-                                              //                       keyboardType: TextInputType.phone,
-                                              //                       onChanged: (value) {
-                                              //                         mobile = value;
-                                              //                       },
-                                              //                       validator: validateMobile,
-                                              //                       onSaved: (value) => mobile = value,
-                                              //                       style: TextStyle(
-                                              //                         color: Colors.black,
-                                              //                       ),
-                                              //                       decoration: InputDecoration(
-                                              //                           focusedBorder: OutlineInputBorder(
-                                              //                             borderRadius: BorderRadius.all(Radius.circular(4)),
-                                              //                             borderSide: BorderSide(width: 1,color: Palette.mainColor),
-                                              //                           ),
-                                              //                           border: OutlineInputBorder(),
-                                              //                           labelText: 'Phone Number',
-                                              //                           prefixIcon: Icon(Icons.phone_android,
-                                              //                             color: Colors.black,),
-                                              //                           labelStyle: TextStyle(
-                                              //                             fontSize: 15,
-                                              //                             color: Colors.black,
-                                              //                           )
-                                              //                       ),
-                                              //                     ),
-                                              //                   ),
-                                              //                 ),
-                                              //                 Padding(
-                                              //                   padding: EdgeInsets.only(top: 10),
-                                              //                   child: MaterialButton(
-                                              //                     onPressed: (){
-                                              //                     validateAndSubmit(title, price, thumbnailUrl, mobile);},
-                                              //                     child: Text('PROCEED TO ORDER',
-                                              //                       style: TextStyle(
-                                              //                         fontSize: 15,
-                                              //                         fontWeight: FontWeight.bold,
-                                              //                       ),
-                                              //                     ),
-                                              //                     // color: Color(0xffff2d55),
-                                              //                     color: Color(0xff706695),
-                                              //                     elevation: 0,
-                                              //                     minWidth: 400,
-                                              //                     height: 50,
-                                              //                     textColor: Colors.white,
-                                              //                     shape: RoundedRectangleBorder(
-                                              //                         borderRadius: BorderRadius.circular(10)
-                                              //                     ),
-                                              //                   ),
-                                              //                 ),
-                                              //               ],
-                                              //             ),
-                                              //           ),
-                                              //         )
-                                              //       )
-                                              //     );
-                                              //   }
-                                              // );
-                                             *
-                                             * */
                                     print('Orders');
                                   },
                                   child: Container(

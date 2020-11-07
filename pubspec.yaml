@@ -39,6 +39,7 @@ dependencies:
   eva_icons_flutter: ^2.0.0
   carousel_slider: ^2.1.0
   carousel_pro: ^1.0.0
+  flat_icons_flutter: ^1.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -88,6 +89,7 @@ flutter:
     - images/shoe2.jpg
     - images/tshirt.jpg
     - images/shirt.png
+    - images/cedi.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
