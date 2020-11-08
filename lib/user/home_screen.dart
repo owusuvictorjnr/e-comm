@@ -130,6 +130,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildCategories({String image, int color}){
+    return CircleAvatar(
+      maxRadius: 38,
+      backgroundColor: Color(color),
+      child: Container(
+        height: 30,
+        child: Image(
+          image: AssetImage("images/$image"),
+          color: Palette.whiteColor,
+        ),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -230,76 +244,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 15
                 ),),
               ),
-              SizedBox(
+              Container(
                 height: 60,
                 child: ListView(
-                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
-                    CategoryItem(
-                      icon: EvaIcons.briefcase,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFF33DCFD),
-                    ),
-                    CategoryItem(
-                      icon: EvaIcons.headphonesOutline,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFFF38CDD),
-                    ),
-                    CategoryItem(
-                      icon: EvaIcons.gift,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFF4FF2AF),
-                    ),
-                    CategoryItem(
-                      icon: EvaIcons.printerOutline,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFFff788e),
-                    ),
-                    CategoryItem(
-                      icon: EvaIcons.videoOutline,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFF74ACF7),
-                    ),
-                    CategoryItem(
-                      icon: EvaIcons.umbrellaOutline,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFF5340de),
-                    ),
-                    CategoryItem(
-                      image: Image.asset('images/shirt.png'),
-                      // icon: EvaIcons.tvOutline,
-                      size: 60,
-                      margin: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      backgroundColor: Color(0xFFFC6CD8),
-                    ),
+                    _buildCategories(image: "shirt.png", color: 0xFF3374FF),
+                    _buildCategories(image: "dress.png", color: 0xFFF933FF),
+                    _buildCategories(image: "necklace.png", color: 0xFFD4AF37),
+                    _buildCategories(image: "shoes.png", color: 0xFF90B905),
+                    _buildCategories(image: "fashion.png", color: 0xFF04AFEA),
+                    _buildCategories(image: "clothes.png", color: 0xFFFB3253),
+                    _buildCategories(image: "canned-food.png", color: 0xFF33dcfd),
                   ],
                 ),
               ),

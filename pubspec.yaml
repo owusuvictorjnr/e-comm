@@ -89,6 +89,13 @@ flutter:
     - images/shoe2.jpg
     - images/tshirt.jpg
     - images/shirt.png
+    - images/necklace.png
+    - images/shoes.png
+    - images/handbag.png
+    - images/fashion.png
+    - images/dress.png
+    - images/clothes.png
+    - images/canned-food.png
     - images/cedi.png
   #   - images/a_dot_ham.jpeg
 

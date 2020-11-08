@@ -90,7 +90,7 @@ class CategorySelectionScreen extends StatelessWidget {
                                 );
                               },
                               title: "Add Product".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'add'),
+                              // icon: IconData(0xe900, fontFamily: 'add'),
                               color: Palette.pinkAccent,
                               // color: Color(0xFFff1744),
                             ),
@@ -107,7 +107,7 @@ class CategorySelectionScreen extends StatelessWidget {
 
                               },
                               title: "Female Bags".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'iphone'),
+                              // icon: IconData(0xe900, fontFamily: 'iphone'),
                               color: Color(0xFF91bfff),
                               // color: Color(0xFFff1744),
                             ),
@@ -124,7 +124,7 @@ class CategorySelectionScreen extends StatelessWidget {
 
                               },
                               title: "Male Bags".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'laptop'),
+                              // icon: IconData(0xe900, fontFamily: 'laptop'),
                               color: Color(0xFFffe291),
                               // color: Color(0xFFff1744),
                             ),
@@ -141,7 +141,7 @@ class CategorySelectionScreen extends StatelessWidget {
 
                               },
                               title: "Necklaces".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'android'),
+                              // icon: IconData(0xe900, fontFamily: 'android'),
                               color: Color(0xFFff91c1),
                               // color: Color(0xFFff1744),
                             ),
@@ -156,7 +156,7 @@ class CategorySelectionScreen extends StatelessWidget {
                                 );
                               },
                               title: "Ladies Wear".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'laptop_mac'),
+                              // icon: IconData(0xe900, fontFamily: 'laptop_mac'),
                               // color: Color(0xFF56ccf2),
                               color: Color(0xFF5340de),
                               // color: Color(0xFFff1744),
@@ -172,7 +172,7 @@ class CategorySelectionScreen extends StatelessWidget {
                                 );
                               },
                               title: "Clothes".toUpperCase(),
-                              icon: IconData(0xe956, fontFamily: 'desk'),
+                              // icon: IconData(0xe956, fontFamily: 'desk'),
                               color: Color(0xFFA52A2A),
                               // color: Color(0xFFff1744),
                             ),
@@ -187,7 +187,7 @@ class CategorySelectionScreen extends StatelessWidget {
                                 );
                               },
                               title: "Men's Shoes".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'camera'),
+                              // icon: IconData(0xe900, fontFamily: 'camera'),
                               color: Palette.pinkAccent,
                               // color: Color(0xFFff1744),
                             ),
@@ -202,7 +202,7 @@ class CategorySelectionScreen extends StatelessWidget {
                                 );
                               },
                               title: "Food Items".toUpperCase(),
-                              icon: IconData(0xe900, fontFamily: 'camera'),
+                              // icon: IconData(0xe900, fontFamily: 'camera'),
                               color: Palette.pinkAccent,
                               // color: Color(0xFFff1744),
                             ),
@@ -227,7 +227,7 @@ class CategorySelectionScreen extends StatelessWidget {
  *********************************************************/
 class CardHolder extends StatelessWidget {
   final String title;
-  final IconData icon;
+  // final IconData icon;
   final Color color;
   final Function onTap;
 
@@ -235,7 +235,7 @@ class CardHolder extends StatelessWidget {
   const CardHolder(
       {Key key,
         @required this.title,
-        @required this.icon,
+        // @required this.icon,
         @required this.onTap,
         @required this.color,
       })
@@ -263,11 +263,11 @@ class CardHolder extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
-              Icon(
-                icon,
-                size: 70,
-                color: color,
-              ),
+              // Icon(
+              //   icon,
+              //   size: 70,
+              //   color: color,
+              // ),
               // SvgPicture.asset("assets/images/imgplaceholder.png",
               //   height: 128,
               // ),

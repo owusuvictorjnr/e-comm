@@ -264,7 +264,7 @@ class _FavoriteItemsScreenState extends State<FavoriteItemsScreen> {
                                                 );
                                               },
                                               child: Container(
-                                                width: 77,
+                                                width: 135,
                                                 decoration: BoxDecoration(
                                                   color: Palette.pinkAccent,
                                                   borderRadius: BorderRadius.only(topRight:  Radius.circular(15),
@@ -277,7 +277,7 @@ class _FavoriteItemsScreenState extends State<FavoriteItemsScreen> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       Center(
-                                                        child: Text("BUY NOW", style: TextStyle(
+                                                        child: Text("CHECKOUT", style: TextStyle(
                                                           color: Palette.whiteColor,
                                                           fontWeight: FontWeight.bold,
                                                         ),),
@@ -288,70 +288,70 @@ class _FavoriteItemsScreenState extends State<FavoriteItemsScreen> {
                                               ),
                                             ),
                                           ]),
-                                          SizedBox(
-                                            width: 0,
-                                          ),
-
-                                          // ===> SHOPPING BAG ICON STARTS FROM HERE <===
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.shopping_cart,
-                                              color: Palette.blackColor,
-                                              size: 35,
-                                            ),
-                                            onPressed: () async {
-                                              await addToCart(
-                                                  index,
-                                                  snapshot.data
-                                              );
-                                              print("Cart");
-                                            },
-                                          ),
-                                          SizedBox(
-                                            width: 0,
-                                          ),
-
-                                          // ===> FAVORITING ICON STARTS FROM HERE <===
-                                          IconButton(
-                                              icon: Icon(
-                                                Icons.favorite,
-                                                size: 35,
-                                                color: Palette.blackColor,
-                                              ),
-                                              onPressed: () {
-                                                addToFavorite(
-                                                    index,
-                                                    snapshot.data
-                                                );
-                                                print("Favorite");
-                                              }
-                                          ),
-                                          SizedBox(
-                                            width: 0,
-                                          ),
-
-                                          GestureDetector(
-                                            onTap: () {
-                                              addToUserOrder(
-                                                  index,
-                                                  snapshot.data
-                                              );
-
-                                              addToAdminOrder(
-                                                  index,
-                                                  snapshot.data
-                                              );
-                                              print('Orders');
-
-                                            },
-                                            child: Container(
-                                              height: 35,
-                                              width: 35,
-                                              // color: Colors.white,
-                                              child: Image.asset("images/order_now.jpg",
-                                                fit: BoxFit.cover,),
-                                            ),
-                                          ),
+                                          // SizedBox(
+                                          //   width: 0,
+                                          // ),
+                                          //
+                                          // // ===> SHOPPING BAG ICON STARTS FROM HERE <===
+                                          // IconButton(
+                                          //   icon: Icon(
+                                          //     Icons.shopping_cart,
+                                          //     color: Palette.blackColor,
+                                          //     size: 35,
+                                          //   ),
+                                          //   onPressed: () async {
+                                          //     await addToCart(
+                                          //         index,
+                                          //         snapshot.data
+                                          //     );
+                                          //     print("Cart");
+                                          //   },
+                                          // ),
+                                          // SizedBox(
+                                          //   width: 0,
+                                          // ),
+                                          //
+                                          // // ===> FAVORITING ICON STARTS FROM HERE <===
+                                          // IconButton(
+                                          //     icon: Icon(
+                                          //       Icons.favorite,
+                                          //       size: 35,
+                                          //       color: Palette.blackColor,
+                                          //     ),
+                                          //     onPressed: () {
+                                          //       addToFavorite(
+                                          //           index,
+                                          //           snapshot.data
+                                          //       );
+                                          //       print("Favorite");
+                                          //     }
+                                          // ),
+                                          // SizedBox(
+                                          //   width: 0,
+                                          // ),
+                                          //
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     addToUserOrder(
+                                          //         index,
+                                          //         snapshot.data
+                                          //     );
+                                          //
+                                          //     addToAdminOrder(
+                                          //         index,
+                                          //         snapshot.data
+                                          //     );
+                                          //     print('Orders');
+                                          //
+                                          //   },
+                                          //   child: Container(
+                                          //     height: 35,
+                                          //     width: 35,
+                                          //     // color: Colors.white,
+                                          //     child: Image.asset("images/order_now.jpg",
+                                          //       fit: BoxFit.cover,),
+                                          //   ),
+                                          // ),
 
                                         ],
                                       ),

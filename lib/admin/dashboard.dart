@@ -95,7 +95,7 @@ class AdminDashboard extends StatelessWidget {
                     crossAxisCount: 2,
                     children: [
                       CardHolder(
-                        icon: IconData(0xe931, fontFamily: 'add'),
+                        // icon: IconData(0xe931, fontFamily: 'add'),
                         title: "ADD PRODUCT",
                         onTap: (){
                           // ===> SEND USER TO THE CategorySelectionScreen SCREEN
@@ -108,7 +108,7 @@ class AdminDashboard extends StatelessWidget {
 
                       ),
                       CardHolder(
-                        icon: IconData(0xe900, fontFamily: 'messages'),
+                        // icon: IconData(0xe900, fontFamily: 'messages'),
                         title: "QUERIES",
                         onTap: (){
                           // ===> SEND USER TO THE CreateIphonesUploadForm SCREEN
@@ -121,7 +121,7 @@ class AdminDashboard extends StatelessWidget {
 
                       ),
                       CardHolder(
-                        icon: IconData(0xe900, fontFamily: 'orders'),
+                        // icon: IconData(0xe900, fontFamily: 'orders'),
                         title: "ORDERS",
                         onTap: (){
                           // ===> SEND USER TO THE RetrieveUsersOrders SCREEN
@@ -134,7 +134,7 @@ class AdminDashboard extends StatelessWidget {
 
                       ),
                       CardHolder(
-                        icon: IconData(0xe900, fontFamily: 'orders'),
+                        // icon: IconData(0xe900, fontFamily: 'orders'),
                         title: "YET TO DECIDE",
                         onTap: (){
                           // ===> SEND USER TO THE CreateIphonesUploadForm SCREEN
@@ -165,14 +165,14 @@ class AdminDashboard extends StatelessWidget {
  *********************************************************/
 class CardHolder extends StatelessWidget {
   final String title;
-  final IconData icon;
+  // final IconData icon;
   final Color color;
   final Function onTap;
 
   const CardHolder(
       {Key key,
         @required this.title,
-        @required this.icon,
+        // @required this.icon,
         @required this.onTap,
         @required this.color})
       : super(key: key);
@@ -200,11 +200,11 @@ class CardHolder extends StatelessWidget {
                     fontSize: 20
                 ),
               ),
-              Icon(
-                icon,
-                size: 40,
-                color: color,
-              ),
+              // Icon(
+              //   icon,
+              //   size: 40,
+              //   color: color,
+              // ),
               // SvgPicture.asset("assets/images/imgplaceholder.png",
               //   height: 128,
               // ),

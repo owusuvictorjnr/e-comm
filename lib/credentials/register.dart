@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -18,6 +19,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   // ===> Declaring Variables <===
   String email;
@@ -100,17 +102,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   /**********************************************************
           ###### FOR VALIDATING REGISTER BTN #######
    *********************************************************/
-
-  validateRegisterBtnAndSubmit () async {
+  validateRegisterBtnAndSubmit() async {
     if (validateAndSave()) {
       // ===> SETTING CIRCULAR PROGRESS BAR TO TRUE <===
       setState(() {
         loading = true;
       });
       try {
-        final user = await AuthHelper.signupWithEmail(
-            email: email,
-            password: password);
+        final user =
+            await AuthHelper.signupWithEmail(email: email, password: password);
         if (user != null) {
           print("signup successful");
           Navigator.pop(context);
@@ -120,13 +120,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         setState(() {
           loading = false;
         });
-
-      }catch(e){
-
+      } on PlatformException catch (e) {
+        _scaffoldkey.currentState.showSnackBar(SnackBar(
+          backgroundColor: Palette.pinkAccent,
+          content: Text(
+            e.message,
+            style: TextStyle(color: Palette.whiteColor),
+          ),
+        ));
       }
-
     }
-
   }
 
   // ===> THIS FUNCTION IS SPIN KIT FOR THE SPIN <===
@@ -140,6 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
+        key: _scaffoldkey,
         backgroundColor: Palette.pinkAccent,
         body: ModalProgressHUD(
           inAsyncCall: loading,
@@ -207,7 +211,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(4)),
                                         borderSide: BorderSide(
-                                            width: 1, color: Palette.pinkAccent),
+                                            width: 1,
+                                            color: Palette.pinkAccent),
                                       ),
                                       labelText: 'Email Address',
                                       prefixIcon: Icon(
@@ -267,11 +272,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                             // ===> SIGN UP BUTTON STARTS FROM HERE <===
                             Padding(
-                              padding: EdgeInsets.only(top: 18),
+                              padding: EdgeInsets.only(top: 10),
                               child: MaterialButton(
                                 onPressed: validateRegisterBtnAndSubmit,
                                 child: Text(
-                                  'SIGN UP',
+                                  "SIGN UP",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
