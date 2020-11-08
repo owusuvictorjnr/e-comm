@@ -11,13 +11,16 @@ import 'package:upgradeecomm/user/order.dart';
 
 import 'botnav.dart';
 
-class DrawerScreen extends StatelessWidget {
+class DrawerScreen extends StatefulWidget {
 
   //=====> FOR INSTANCES OF FIREBASE <=====
+  @override
+  _DrawerScreenState createState() => _DrawerScreenState();
+}
+
+class _DrawerScreenState extends State<DrawerScreen> {
   final auth = FirebaseAuth.instance;
 
-
-  // ===> THIS IS FOR SIGN OUT <===
   signOut() async {
     await auth.signOut();
   }
@@ -70,6 +73,7 @@ class DrawerScreen extends StatelessWidget {
 
                 // ===> FOR HOME <===
                 ListTile(
+                  enabled: true,
                   leading: Icon(
                     Icons.home,
                     color: Colors.black54,
@@ -101,15 +105,16 @@ class DrawerScreen extends StatelessWidget {
 
                 // ===> FOR ORDERS <===
                 ListTile(
+                  enabled: true,
                   leading: Icon(
-                    Icons.shopping_basket,
+                    LineAwesomeIcons.first_order,
                     color: Colors.black54,
                   ),
                   // ===> Added Align to help remove the space between leading and title
                   title: Align(
                     alignment: Alignment(-1.2, 0),
                     child: Text(
-                      "My Orders",
+                      "Orders",
                       style: TextStyle(
                         color: Palette.blackColor,
                       ),
@@ -131,6 +136,7 @@ class DrawerScreen extends StatelessWidget {
 
                 // ===> FOR CART <===
                 ListTile(
+                  enabled: true,
                   leading: Icon(
                     Icons.shopping_cart,
                     color: Colors.black54,
@@ -139,7 +145,7 @@ class DrawerScreen extends StatelessWidget {
                   title: Align(
                     alignment: Alignment(-1.2, 0),
                     child: Text(
-                      "My Cart",
+                      "Cart",
                       style: TextStyle(
                         color: Palette.blackColor,
                       ),
@@ -161,6 +167,7 @@ class DrawerScreen extends StatelessWidget {
 
                 // ===> FOR FAVORITE <===
                 ListTile(
+                  enabled: true,
                   leading: Icon(
                     Icons.favorite,
                     color: Colors.black54,
@@ -194,6 +201,7 @@ class DrawerScreen extends StatelessWidget {
                 // ===> SEND USER TO THE CONTACT US SCREEN <===
 
                 ListTile(
+                  enabled: true,
                   leading: Icon(
                     LineAwesomeIcons.mail_bulk,
                     color: Colors.black54,
@@ -226,6 +234,7 @@ class DrawerScreen extends StatelessWidget {
                 // ===> SEND USER TO THE HOME SCREEN AFTER LOGOUT <===
 
                 ListTile(
+                  enabled: true,
                   leading: Icon(
                     LineAwesomeIcons.alternate_sign_out,
                     color: Colors.black54,
