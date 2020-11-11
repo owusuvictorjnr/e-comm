@@ -17,16 +17,15 @@ class CategoryProductsScreen extends StatefulWidget {
   CategoryProductsScreen({Key key, this.category, this.title}) : super(key: key);
 
   @override
-  _CategoryProductsScreenState createState() => _CategoryProductsScreenState(category: category, title: title);
+  _CategoryProductsScreenState createState() => _CategoryProductsScreenState(category: category);
 }
 
 class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   final String category;
   String productId;
-  final String title;
 
 
-  _CategoryProductsScreenState( {this.category, this.title});
+  _CategoryProductsScreenState( {this.category});
 
   @override
   void initState(){
@@ -130,6 +129,35 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     size: 50.0,
   );
 
+  // ===> THIS IS FOR _generateCategoryTitle <===
+  String _generateCategoryTitle(String category){
+    switch(category) {
+      case "clothes": { return "Clothes";}
+      break;
+
+      case "female_bags": { return "Female Bags"; }
+      break;
+
+      case "food_items": { return "Food Items"; }
+      break;
+
+      case "ladies_wear": {  return "Ladies Wear"; }
+      break;
+
+      case "male_bags": {  return "Male Bags"; }
+      break;
+
+      case "mens_shoes": {  return "Male Shoes"; }
+      break;
+
+      case "necklaces": {  return "Necklaces"; }
+      break;
+
+      default: { return "category" ;}
+      break;
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -142,7 +170,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             brightness: Brightness.light,
             backgroundColor: Palette.whiteColor,
             title: Text(
-              "NECKLACES",
+              _generateCategoryTitle(category).toUpperCase(),
+
               style: TextStyle(
                   color: Palette.pinkAccent,
                   fontSize: 18,

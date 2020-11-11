@@ -10,6 +10,7 @@ import 'package:upgradeecomm/constant/drawer.dart';
 import 'cart.dart';
 
 class CategoriesScreen extends StatefulWidget {
+
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
