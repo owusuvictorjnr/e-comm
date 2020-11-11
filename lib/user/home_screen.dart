@@ -10,6 +10,7 @@ import 'package:upgradeecomm/address/address_main.dart';
 import 'package:upgradeecomm/config/colors.dart';
 import 'package:upgradeecomm/constant/circle_buttons.dart';
 import 'package:upgradeecomm/constant/drawer.dart';
+import 'package:upgradeecomm/user/search.dart';
 import 'cart.dart';
 
 double width;
@@ -182,11 +183,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ]),
           actions: <Widget>[
-            IconButton(icon: Icon(EvaIcons.search,
-            size: 30,
-            color: Palette.blackColor,),
-                onPressed: (){},
-            ),
+            // IconButton(icon: Icon(EvaIcons.search,
+            // size: 30,
+            // color: Palette.blackColor,),
+            //     onPressed: (){
+            //   showSearch(
+            //       context: context,
+            //       delegate: Search(),
+            //   );
+            //     },
+            // ),
             InkWell(
               onTap: () {
                // ===> SEND USER TO CART SCREEN <===
@@ -339,6 +345,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         DocumentSnapshot document = snapshot.data.documents[index];
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                          return Center(
+                            child: spinkit,
+                          );
+                        }
                         return Material(
                           color: Colors.transparent,
                           child: InkWell(
@@ -424,43 +435,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 height: 10,
                                               ),
                                               Wrap(direction: Axis.vertical, children: [
-                                                Flexible(
-                                                  child: Expanded(
-                                                    child: SingleChildScrollView(
-                                                      child: Container(
-                                                          width: 340,
-                                                          color: Palette.whiteColor,
-                                                          child: Column(
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              ListTile(
-                                                                title: Align(
-                                                                  alignment: Alignment.center,
-                                                                  child: Text(
-                                                                    "Product Details".toUpperCase(),
-                                                                    style: TextStyle(
-                                                                      color: Colors.black,
-                                                                      fontSize: 16,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                subtitle: Padding(
-                                                                  padding: EdgeInsets.only(top: 5),
-                                                                  child: Text(
-                                                                    snapshot.data.documents[index].get("Product Description"),
-                                                                    style: TextStyle(
-                                                                      color: Colors.black87,
-                                                                      fontSize: 15,
-                                                                    ),
-                                                                  ),
+                                                SingleChildScrollView(
+                                                  child: Container(
+                                                      width: 340,
+                                                      color: Palette.whiteColor,
+                                                      child: Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          ListTile(
+                                                            title: Align(
+                                                              alignment: Alignment.center,
+                                                              child: Text(
+                                                                "Product Details".toUpperCase(),
+                                                                style: TextStyle(
+                                                                  color: Colors.black,
+                                                                  fontSize: 16,
                                                                 ),
                                                               ),
-                                                            ],
-                                                          )),
-                                                    ),
-                                                  ),
+                                                            ),
+                                                            subtitle: Padding(
+                                                              padding: EdgeInsets.only(top: 5),
+                                                              child: Text(
+                                                                snapshot.data.documents[index].get("Product Description"),
+                                                                style: TextStyle(
+                                                                  color: Colors.black87,
+                                                                  fontSize: 15,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )),
                                                 ),
                                               ]),
                                               SizedBox(

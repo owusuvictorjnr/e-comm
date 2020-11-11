@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:upgradeecomm/config/colors.dart';
 import 'package:upgradeecomm/dialogs/policy_dialog.dart';
 
 class TermsOfUse extends StatelessWidget {
@@ -22,7 +23,7 @@ class TermsOfUse extends StatelessWidget {
               TextSpan(
                 text: "Terms & Conditions ",
                 style: TextStyle(
-                    color: Color(0xff706695),
+                    color: Palette.pinkAccent,
                     fontWeight: FontWeight.bold,
                     // fontStyle: FontStyle.italic
                 ),
@@ -43,7 +44,7 @@ class TermsOfUse extends StatelessWidget {
               TextSpan(
                 text: "Privacy Policy",
                 style: TextStyle(
-                  color: Color(0xff706695),
+                  color: Palette.pinkAccent,
                   fontWeight: FontWeight.bold,
                   // fontStyle: FontStyle.italic
                 ),

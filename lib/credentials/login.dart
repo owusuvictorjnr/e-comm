@@ -7,10 +7,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:upgradeecomm/config/colors.dart';
+import 'package:upgradeecomm/constant/botnav.dart';
 import 'package:upgradeecomm/constant/transitionroute.dart';
 import 'package:upgradeecomm/credentials/register.dart';
+import 'package:upgradeecomm/credentials/register_old.dart';
+import 'package:upgradeecomm/enum/auth_result_status.dart';
 import 'package:upgradeecomm/services/auth.dart';
 import 'package:upgradeecomm/credentials/forgotpwd.dart';
+import 'package:upgradeecomm/services/firebase_auth_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -34,6 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
   //=====> FOR INSTANCES OF FIREBASE <=====
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+
+  TextEditingController loginEmailController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
 
   //=====> FUNCTION FOR _toggleLogin <=====
   void _toggleLogin() {
@@ -90,8 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
   /**********************************************************
       ###### FOR VALIDATING LOGIN BTN #######
    *********************************************************/
-
-  validateLoginBtnAndSubmit() async {
+  /*
+  *
+  *   validateLoginBtnAndSubmit() async {
     if (validateAndSave()) {
       // ===> SETTING CIRCULAR PROGRESS BAR TO TRUE <===
       setState(() {
@@ -99,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       try {
         final user =
-            await AuthHelper.signInWithEmail(email: email, password: password);
+        await AuthHelper.signInWithEmail(email: email, password: password);
         if (user != null) {
           print("login successful");
         }
@@ -117,6 +125,51 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
+
+  *
+  * */
+
+
+  validateLoginBtnAndSubmit() async {
+    if (validateAndSave()) {
+      // ===> SETTING CIRCULAR PROGRESS BAR TO TRUE <===
+      setState(() {
+        loading = true;
+      });
+      try {
+        final result =
+        await FirebaseAuthHelper().login(email: email, password: password);
+
+        // ===> SETTING CIRCULAR PROGRESS BAR TO FALSE <===
+        setState(() {
+          loading = false;
+        });
+
+        if (result == AuthResultStatus.successful) {
+          // // Login successful. Navigate to Home Screen
+          // Navigator.push(context, TransitionPageRoute(widget: BottomNavScreen()));
+
+          // ===>LOGIN SUCCESSFUL. SEND USER TO THE HOME SCREEN
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavScreen()),
+          );
+        } else {
+          _scaffoldkey.currentState.showSnackBar(SnackBar(
+            backgroundColor: Palette.pinkAccent,
+            content: Text(
+              "Login not successful. Try Again",
+              style: TextStyle(color: Palette.whiteColor),
+            ),
+            duration: Duration(milliseconds: 800),
+          ));
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
+
 
   // ===> Implementing _showAlertDialog function <===
   _showAlertDialog(errorMsg) {
@@ -379,7 +432,7 @@ Future<bool> _onBackPressed() async {
 Widget _buildDialogContent(BuildContext context) => Container(
       height: 280,
       decoration: BoxDecoration(
-        color: Colors.brown,
+        color: Palette.pinkAccent,
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),

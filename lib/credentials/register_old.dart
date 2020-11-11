@@ -2,25 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:upgradeecomm/config/colors.dart';
 import 'package:upgradeecomm/constant/terms_of_use.dart';
 import 'package:upgradeecomm/constant/transitionroute.dart';
-import 'package:upgradeecomm/credentials/profile_settings.dart';
-import 'package:upgradeecomm/enum/auth_result_status.dart';
-import 'package:upgradeecomm/services/auth_exception_handler.dart';
-import 'package:upgradeecomm/services/firebase_auth_helper.dart';
+import 'package:upgradeecomm/services/auth.dart';
 import 'login.dart';
 
-class RegisterScreen extends StatefulWidget {
+class OldRegisterScreen extends StatefulWidget {
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _OldRegisterScreenState createState() => _OldRegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _OldRegisterScreenState extends State<OldRegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   // ===> Declaring Variables <===
   String email;
@@ -35,11 +34,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final db = FirebaseFirestore.instance;
   User user = FirebaseAuth.instance.currentUser;
 
-  AuthResultStatus _status;
+  // AuthResultStatus _status;
 
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
 
+  //=====> FUNCTION FOR clearForm <=====
   clearForm() {
     setState(() {
       loginEmailController.clear();
@@ -53,8 +53,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _obscurePwd = !_obscurePwd;
     });
   }
-
-  // ignore: slash_for_doc_comments
 
   // ignore: slash_for_doc_comments
   /***************************************************************
@@ -102,135 +100,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   // ignore: slash_for_doc_comments
   /**********************************************************
-      ###### FOR VALIDATING REGISTER BTN #######
+          ###### FOR VALIDATING REGISTER BTN #######
    *********************************************************/
-
-  // validateRegisterBtnAndSubmit() async {
-  //   if (validateAndSave()) {
-  //
-  //     // ===> SETTING CIRCULAR PROGRESS BAR TO TRUE <===
-  //     setState(() {
-  //       loading = true;
-  //     });
-  //     try {
-  //       print("$email and $password");
-  //
-  //       // ===> REGISTERING THE USER <===
-  //       final result = await FirebaseAuthHelper().createAccount(email: email, password: password);
-  //
-  //       // ===> SETTING CIRCULAR PROGRESS BAR TO FALSE <===
-  //       setState(() {
-  //         loading = false;
-  //       });
-  //
-  //       if (result == AuthResultStatus.successful) {
-  //
-  //         // ===> REGISTRATION SUCCESSFUL. SEND USER TO THE BottomNavScreen SCREEN
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => BottomNavScreen()),
-  //         );
-  //
-  //         // ===> Store user's data into Firestore dB <===
-  //         User user = auth.currentUser; // ===> This helps to get the uid in the dB <===
-  //
-  //         // ===> Create User Object <===
-  //
-  //         db.collection("users").doc(user.uid).set({
-  //           'uid': user.uid,
-  //           "Full Name": name.trim(),
-  //           "Mobile Number": mobile.trim(),
-  //           "Location/GPS": address.trim(),
-  //           "Email Address": address.trim(),
-  //           "Saved Date": DateTime.now(),
-  //         }).then((_) {
-  //           print("Success");
-  //         });
-  //
-  //       } else {
-  //         // ===> Registration failed, display error message to user <===
-  //         final errorMsg = AuthExceptionHandler.generateExceptionMessage(result);
-  //         _showAlertDialog(errorMsg);
-  //       }
-  //     } catch (e){
-  //       // ===> Handle error i.e display notification or toast <===
-  //       print(e.toString());
-  //     }
-  //
-  //   }
-  // }
-
-  // ===> Implementing _showAlertDialog function <===
-
-  Future<void> validateRegisterBtnAndSubmit() async {
+  validateRegisterBtnAndSubmit() async {
     if (validateAndSave()) {
       // ===> SETTING CIRCULAR PROGRESS BAR TO TRUE <===
       setState(() {
         loading = true;
       });
-
       try {
-        print("$email and $password");
-        registerUser();
-      } catch (e) {
-        // ===> Handle error i.e display notification or toast <===
-        print(e.toString());
+        final user =
+            await AuthHelper.signupWithEmail(email: email, password: password);
+        if (user != null) {
+          print("signup successful");
+          Navigator.pop(context);
+        }
+
+        // ===> SETTING CIRCULAR PROGRESS BAR TO TRUE <===
+        setState(() {
+          loading = false;
+        });
+      } on PlatformException catch (e) {
+        _scaffoldkey.currentState.showSnackBar(SnackBar(
+          backgroundColor: Palette.pinkAccent,
+          content: Text(
+            e.message,
+            style: TextStyle(color: Palette.whiteColor),
+          ),
+        ));
       }
     }
-  }
-
-  void registerUser() async {
-
-    // ===> REGISTERING THE USER <===
-    final result = await FirebaseAuthHelper()
-        .createAccount(email: email, password: password);
-
-
-    // ===> SETTING CIRCULAR PROGRESS BAR TO FALSE <===
-    setState(() {
-      loading = false;
-    });
-    if (result == AuthResultStatus.successful) {
-      // ===> REGISTRATION SUCCESSFUL. SEND USER TO THE ProfileSettingScreen SCREEN
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileSettingScreen()),
-      );
-
-      // ===> Store user's data into Firestore dB <===
-      User user = auth.currentUser; // ===> This helps to get the uid in the dB <===
-
-      // ===> Create User Object <===
-      db.collection("users").doc(user.uid).set({
-        'uid': user.uid,
-        "email": email.trim(),
-        "role": "user",
-        "last login": DateTime.now(),
-        "registered on": DateTime.now(),
-      }).then((_) {
-        print("Success");
-      });
-    } else {
-      // ===> Registration failed, display error message to user <===
-      final errorMsg = AuthExceptionHandler.generateExceptionMessage(result);
-      _showAlertDialog(errorMsg);
-    }
-  }
-
-  // ===> FOR ALERT DIALOG <===
-
-  _showAlertDialog(errorMsg) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              'Registration Failed',
-              style: TextStyle(color: Colors.black),
-            ),
-            content: Text(errorMsg),
-          );
-        });
   }
 
   // ===> THIS FUNCTION IS SPIN KIT FOR THE SPIN <===
@@ -244,19 +143,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
+        key: _scaffoldkey,
         backgroundColor: Palette.pinkAccent,
         body: ModalProgressHUD(
           inAsyncCall: loading,
           opacity: 0.5,
           progressIndicator: spinkit,
-          color: Palette.pinkAccent,
+          color: Color(0xff706695),
           child: Stack(
             children: [
               SizedBox(
                 height: 20,
-              ),
-              Container(
-                color: Palette.pinkAccent,
               ),
 
               // ===> SIGN UP STARTS HERE <===
@@ -314,7 +211,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(4)),
                                         borderSide: BorderSide(
-                                            width: 1, color: Palette.pinkAccent),
+                                            width: 1,
+                                            color: Palette.pinkAccent),
                                       ),
                                       labelText: 'Email Address',
                                       prefixIcon: Icon(
@@ -364,7 +262,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         _obscurePwd
                                             ? Icons.visibility_off
                                             : Icons.visibility,
-                                        color: Palette.pinkAccent,
+                                        color: Color(0xff706695),
                                       ),
                                     ),
                                     labelStyle: TextStyle(
@@ -374,30 +272,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                             // ===> SIGN UP BUTTON STARTS FROM HERE <===
                             Padding(
-                              padding: EdgeInsets.only(top: 18),
+                              padding: EdgeInsets.only(top: 10),
                               child: MaterialButton(
                                 onPressed: validateRegisterBtnAndSubmit,
-                                // onPressed: () async{
-                                //   if (email.isEmpty ||
-                                //       password.isEmpty) {
-                                //     print("Email and password cannot be empty");
-                                //     return;
-                                //   }
-                                //   try {
-                                //     final user = await AuthHelper.signUpWithEmail(
-                                //         email: email,
-                                //         password: password);
-                                //
-                                //     if (user != null) {
-                                //       print("sign-up successful");
-                                //       Navigator.pop(context);
-                                //     }
-                                //   } catch (e) {
-                                //     print(e);
-                                //   }
-                                // },
                                 child: Text(
-                                  'SIGN UP',
+                                  "SIGN UP",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -455,7 +334,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: Container(
                                 height: 1,
                                 width: 10,
-                                color: Palette.pinkAccent,
+                                color: Color(0xff706695),
                               ),
                             ),
                             TermsOfUse(),
@@ -495,7 +374,7 @@ Future<bool> _onBackPressed() async {
 Widget _buildDialogContent(BuildContext context) => Container(
       height: 280,
       decoration: BoxDecoration(
-        color: Palette.pinkAccent,
+        color: Colors.brown,
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),

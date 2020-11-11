@@ -81,10 +81,10 @@ class _CartScreenState extends State<CartScreen> {
           centerTitle: true,
           leading: Stack(children: [
             CircleButtons(
-              iconData: EvaIcons.menu2Outline,
+              iconData: EvaIcons.chevronLeft,
               iconSize: 25,
               onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
+                Navigator.of(context).pop(true);
               },
             ),
           ]),
@@ -303,61 +303,61 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
                                 // ===> COUNTER CONTAINER STARTS FROM HERE <===
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Container(
-                                  height: 90,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Color(0xFFF2F2F2),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                        child: Icon(Icons.add,
-                                          size: 24,
-                                          color: Palette.blackColor,),
-                                        onTap: () {
-                                          setState(() {
-                                            counter++;
-                                          });
-                                        },
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Container(
-                                          height: 30,
-                                          width: 30,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            color: Palette.whiteColor,
-                                          ),
-                                            child: Center(child: Text(counter.toString(),
-                                            style: TextStyle(
-                                              color: Palette.pinkAccent,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),))),
-                                      ),
-                                      GestureDetector(
-                                        child: Icon(Icons.remove,
-                                        size: 24,
-                                        color: Palette.blackColor,),
-                                        onTap: () {
-                                          setState(() {
-                                            if (counter > 1) {
-                                              counter--;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   width: 50,
+                                // ),
+                                // Container(
+                                //   height: 90,
+                                //   width: 40,
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(20),
+                                //     color: Color(0xFFF2F2F2),
+                                //   ),
+                                //   child: Column(
+                                //     mainAxisAlignment:
+                                //         MainAxisAlignment.spaceEvenly,
+                                //     children: [
+                                //       GestureDetector(
+                                //         child: Icon(Icons.add,
+                                //           size: 24,
+                                //           color: Palette.blackColor,),
+                                //         onTap: () {
+                                //           setState(() {
+                                //             counter++;
+                                //           });
+                                //         },
+                                //       ),
+                                //       Padding(
+                                //         padding: EdgeInsets.all(5.0),
+                                //         child: Container(
+                                //           height: 30,
+                                //           width: 30,
+                                //           decoration: BoxDecoration(
+                                //             borderRadius: BorderRadius.circular(50),
+                                //             color: Palette.whiteColor,
+                                //           ),
+                                //             child: Center(child: Text(counter.toString(),
+                                //             style: TextStyle(
+                                //               color: Palette.pinkAccent,
+                                //               fontWeight: FontWeight.bold,
+                                //               fontSize: 20,
+                                //             ),))),
+                                //       ),
+                                //       GestureDetector(
+                                //         child: Icon(Icons.remove,
+                                //         size: 24,
+                                //         color: Palette.blackColor,),
+                                //         onTap: () {
+                                //           setState(() {
+                                //             if (counter > 1) {
+                                //               counter--;
+                                //             }
+                                //           });
+                                //         },
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

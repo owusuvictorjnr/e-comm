@@ -160,10 +160,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           centerTitle: true,
           leading: Stack(children: [
             CircleButtons(
-              iconData: EvaIcons.menu2Outline,
+              iconData: EvaIcons.chevronLeft,
               iconSize: 25,
               onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
+                Navigator.of(context).pop(true);
               },
             ),
           ]),

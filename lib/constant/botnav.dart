@@ -28,6 +28,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     HomeScreen(),
     CategoriesScreen(),
     // CreateUploadFormContainer(),
+    OrdersScreen(),
     CartScreen(),
     AccountScreen(),
   ]; // to store nested tabs
